@@ -38,6 +38,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FilledTonalButton
+import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -46,6 +47,10 @@ import androidx.compose.material3.SuggestionChip
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -355,9 +360,11 @@ fun StartWirelessCard(
 @Composable
 fun StartPCCard(
     adbCommand: String,
+    termuxCommand: String,
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
+    var selectedTab by remember { mutableIntStateOf(0) } // 0 = Computer, 1 = Termux
 
     Card(
         modifier = modifier
@@ -380,12 +387,12 @@ fun StartPCCard(
                 Spacer(modifier = Modifier.width(14.dp))
                 Column {
                     Text(
-                        text = "Start by connecting to a computer",
+                        text = "Start via Computer / Termux",
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold
                     )
                     Text(
-                        text = "Execute command in ADB on your computer",
+                        text = if (selectedTab == 0) "Execute via PC ADB Terminal" else "Start directly inside Termux on this phone",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -393,6 +400,26 @@ fun StartPCCard(
             }
 
             Spacer(modifier = Modifier.height(14.dp))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                FilterChip(
+                    selected = selectedTab == 0,
+                    onClick = { selectedTab = 0 },
+                    label = { Text("Computer (ADB)") }
+                )
+                FilterChip(
+                    selected = selectedTab == 1,
+                    onClick = { selectedTab = 1 },
+                    label = { Text("Termux (On Phone)") }
+                )
+            }
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            val currentCommand = if (selectedTab == 0) adbCommand else termuxCommand
 
             Surface(
                 shape = RoundedCornerShape(12.dp),
@@ -407,15 +434,16 @@ fun StartPCCard(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        text = adbCommand,
+                        text = currentCommand,
                         style = MaterialTheme.typography.bodySmall,
                         fontFamily = FontFamily.Monospace,
+                        color = Color.White,
                         modifier = Modifier.weight(1f)
                     )
                     IconButton(
                         onClick = {
                             val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                            clipboard.setPrimaryClip(ClipData.newPlainText("AmInoS ADB Command", adbCommand))
+                            clipboard.setPrimaryClip(ClipData.newPlainText("AmInoS Command", currentCommand))
                             Toast.makeText(context, "Command copied to clipboard!", Toast.LENGTH_SHORT).show()
                         },
                         modifier = Modifier.testTag("copy_adb_command_button")

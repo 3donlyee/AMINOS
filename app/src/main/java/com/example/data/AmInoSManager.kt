@@ -232,10 +232,12 @@ class AmInoSManager(private val context: Context) {
     }
 
     fun getAdbCommand(): String {
-        return "adb shell sh /sdcard/Android/data/${context.packageName}/start.sh"
+        val libDir = context.applicationInfo.nativeLibraryDir
+        return "adb shell $libDir/libshizuku.so"
     }
 
-    fun getAdbDirectCommand(): String {
-        return "adb shell sh /data/user/0/${context.packageName}/start.sh"
+    fun getTermuxCommand(): String {
+        val libDir = context.applicationInfo.nativeLibraryDir
+        return "$libDir/libshizuku.so"
     }
 }

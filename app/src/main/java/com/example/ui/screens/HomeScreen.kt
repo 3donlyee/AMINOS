@@ -258,9 +258,12 @@ fun HomeScreen(
                 )
             }
 
-            // Start with Computer Card
+            // Start with Computer / Termux Card
             item {
-                StartPCCard(adbCommand = manager.getAdbCommand())
+                StartPCCard(
+                    adbCommand = manager.getAdbCommand(),
+                    termuxCommand = manager.getTermuxCommand()
+                )
             }
 
             // Start with Root Card
