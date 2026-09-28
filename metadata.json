@@ -1,0 +1,6 @@
+{
+  "name": "AmInoS",
+  "description": "AmInoS - System API Delegator with ADB, Wireless Debugging & Root support, featuring Naruto Sharingan edition",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

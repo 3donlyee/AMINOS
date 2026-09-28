@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">AmInoS</string>
+    <string name="aminos_status_running">AmInoS is running</string>
+    <string name="aminos_status_stopped">AmInoS is not running</string>
+    <string name="aminos_version_title">Version</string>
+    <string name="aminos_version_value">13.5.4 (1048)</string>
+    <string name="aminos_api_version">API version 16</string>
+    <string name="mode_adb">ADB (Wireless / USB)</string>
+    <string name="mode_root">Root (su)</string>
+    <string name="mode_none">Service inactive</string>
+    <string name="authorized_apps_title">Authorized Applications</string>
+    <string name="authorized_apps_desc">Allow third-party applications to invoke system APIs with AmInoS</string>
+    <string name="start_wireless_title">Start via Wireless Debugging</string>
+    <string name="start_wireless_desc">For Android 11+ devices, start AmInoS directly without a PC</string>
+    <string name="start_pc_title">Start by connecting to a computer</string>
+    <string name="start_pc_desc">Run ADB commands via terminal on your computer</string>
+    <string name="start_root_title">Start with Root</string>
+    <string name="start_root_desc">For rooted devices (Magisk, KernelSU, APatch)</string>
+    <string name="terminal_title">AmInoS Terminal</string>
+    <string name="terminal_desc">Execute privileged system commands directly</string>
+</resources>
