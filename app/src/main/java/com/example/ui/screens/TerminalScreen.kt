@@ -36,6 +36,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -169,13 +170,26 @@ fun TerminalScreen(
                     modifier = Modifier
                         .weight(1f)
                         .testTag("terminal_command_input"),
-                    placeholder = { Text("Enter shell command...") },
+                    placeholder = { Text("Enter shell command...", color = Color.Gray) },
+                    textStyle = androidx.compose.ui.text.TextStyle(
+                        color = Color.White,
+                        fontFamily = FontFamily.Monospace,
+                        fontSize = 13.sp
+                    ),
                     singleLine = true,
                     shape = RoundedCornerShape(12.dp),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedTextColor = Color.White,
+                        unfocusedTextColor = Color.White,
+                        focusedBorderColor = SharinganRed,
+                        unfocusedBorderColor = Color(0xFF333344),
+                        focusedContainerColor = Color(0xFF14141A),
+                        unfocusedContainerColor = Color(0xFF14141A)
+                    ),
                     trailingIcon = {
                         if (commandInput.isNotEmpty()) {
                             IconButton(onClick = { commandInput = "" }) {
-                                Icon(Icons.Default.Clear, contentDescription = "Clear")
+                                Icon(Icons.Default.Clear, contentDescription = "Clear", tint = Color.LightGray)
                             }
                         }
                     }

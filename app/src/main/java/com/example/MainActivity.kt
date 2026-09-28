@@ -33,6 +33,11 @@ class MainActivity : ComponentActivity() {
 
         manager = AmInoSManager(applicationContext)
 
+        if (intent.getBooleanExtra("auto_start_wadb", false)) {
+            val port = intent.getIntExtra("wadb_port", 41095)
+            manager.startWithWireless(port)
+        }
+
         setContent {
             AmInoSTheme(darkTheme = true) { // Authentic dark anime Naruto Sharingan theme
                 Surface(modifier = Modifier.fillMaxSize()) {
