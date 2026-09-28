@@ -75,7 +75,8 @@ fun HomeScreen(
     onNavigateToTerminal: () -> Unit,
     onNavigateToLogs: () -> Unit,
     onNavigateToSettings: () -> Unit,
-    onOpenPairingDialog: () -> Unit
+    onOpenPairingDialog: () -> Unit,
+    onOpenStartWirelessDialog: () -> Unit
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
@@ -246,10 +247,7 @@ fun HomeScreen(
             item {
                 StartWirelessCard(
                     onPairClick = onOpenPairingDialog,
-                    onStartClick = {
-                        manager.startWithWireless(52140)
-                        Toast.makeText(context, "AmInoS started via Wireless Debugging!", Toast.LENGTH_SHORT).show()
-                    },
+                    onStartClick = onOpenStartWirelessDialog,
                     onDeveloperOptionsClick = {
                         try {
                             context.startActivity(Intent(Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS))

@@ -19,6 +19,7 @@ import com.example.ui.screens.AuthorizedAppsScreen
 import com.example.ui.screens.HomeScreen
 import com.example.ui.screens.LogsScreen
 import com.example.ui.screens.SettingsScreen
+import com.example.ui.screens.StartWirelessDialog
 import com.example.ui.screens.TerminalScreen
 import com.example.ui.screens.WirelessPairingDialog
 import com.example.ui.theme.AmInoSTheme
@@ -52,6 +53,7 @@ class MainActivity : ComponentActivity() {
 fun AmInoSApp(manager: AmInoSManager) {
     var currentScreen by remember { mutableStateOf<Screen>(Screen.Home) }
     var showPairingDialog by remember { mutableStateOf(false) }
+    var showStartWirelessDialog by remember { mutableStateOf(false) }
 
     Crossfade(targetState = currentScreen, label = "screen_transition") { screen ->
         when (screen) {
@@ -62,7 +64,8 @@ fun AmInoSApp(manager: AmInoSManager) {
                     onNavigateToTerminal = { currentScreen = Screen.Terminal },
                     onNavigateToLogs = { currentScreen = Screen.Logs },
                     onNavigateToSettings = { currentScreen = Screen.Settings },
-                    onOpenPairingDialog = { showPairingDialog = true }
+                    onOpenPairingDialog = { showPairingDialog = true },
+                    onOpenStartWirelessDialog = { showStartWirelessDialog = true }
                 )
             }
             is Screen.AuthorizedApps -> {
@@ -95,7 +98,8 @@ fun AmInoSApp(manager: AmInoSManager) {
                     onNavigateToTerminal = { currentScreen = Screen.Terminal },
                     onNavigateToLogs = { currentScreen = Screen.Logs },
                     onNavigateToSettings = { currentScreen = Screen.Settings },
-                    onOpenPairingDialog = { showPairingDialog = true }
+                    onOpenPairingDialog = { showPairingDialog = true },
+                    onOpenStartWirelessDialog = { showStartWirelessDialog = true }
                 )
             }
         }
@@ -105,6 +109,14 @@ fun AmInoSApp(manager: AmInoSManager) {
         WirelessPairingDialog(
             manager = manager,
             onDismiss = { showPairingDialog = false }
+        )
+    }
+
+    if (showStartWirelessDialog) {
+        StartWirelessDialog(
+            manager = manager,
+            defaultPort = "42363",
+            onDismiss = { showStartWirelessDialog = false }
         )
     }
 }
